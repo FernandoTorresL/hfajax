@@ -80,5 +80,25 @@ function warn(field, warningType) {
   document.getElementById("enroll").disabled = true;
 }
 
+function unwarn(field, warningType) {
+  if (field.parentNode.getElementsByTagName("p").length > 0) {
+    var p = field.parentNode.getElementsByTagName("p")[0];
+    var currentWarning = p.childNodes[0].nodeValue;
+    var warning = eval('warnings.' + field.id + '.' + warningType);
+    if (currentWarning == warning) {
+      field.parentNode.removeChild(p);
+    }
+  }
+  var fieldsets = 
+    document.getElementById("content").getElementsByTagName("fieldset");
+  for (var i=0; i<fieldsets.length; i++) {
+    var fieldWarnings = fieldsets[i].getElementsByTagName("p").length;
+    if (fieldWarnings > 0) {
+      document.getElementById("enroll").disabled = true;
+      return;
+    }       
+  }
+  document.getElementById("enroll").disabled = false;
+}
 
 
